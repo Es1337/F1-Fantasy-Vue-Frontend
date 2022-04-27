@@ -1,26 +1,24 @@
 <template>
-  <div class="container">
-    <PageHeader v-show="logged" title="F1 Fantasy"/>
-    <LoginPanel v-show="toggleLoginRegister && !logged"/>
-    <RegisterPanel v-show="!toggleLoginRegister && !logged"/>
+  <div class="container" v-show="this.$store.getters.getLoggedStatus" >
+    <h2>Hello {{user}}</h2>
   </div>
 </template>
 
 <script>
-import RegisterPanel from '../components/RegisterPanel.vue';
-import LoginPanel from '../components/LoginPanel.vue';
-import PageHeader from '../components/PageHeader.vue';
   export default {
     name: 'HomeView',
     components: {
-      PageHeader,
-      LoginPanel,
-      RegisterPanel,
     },
     data () {
       return {
-        logged: false,
-        toggleLoginRegister: false,
+        user: 'Default'
+      }
+    },
+    methods: {
+    },
+    mounted() {
+      if(this.$store.getters.getLoggedStatus) {
+        this.user = this.$store.getters.getUser;
       }
     }
   }

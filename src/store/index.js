@@ -2,19 +2,24 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    logged: '',
-    admin: false
+    logged: true,
+    user: 'Michał',
+    admin: true
   },
   getters: {
     getLoggedStatus: state => state.logged,
-    getAdminPrivileges: state => state.admin
+    getAdminPrivileges: state => state.admin,
+    getUser: state => state.user,
   },
   mutations: {
-    setAdmin(state, payload) {
+    setAdminPrivileges(state, payload) {
       state.admin = payload;
     },
-    setLogged(state, payload) {
+    setLoggedStatus(state, payload) {
       state.logged = payload;
+    },
+    setUser(state, payload) {
+      state.user = payload;
     }
   },
   actions: {
