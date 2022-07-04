@@ -1,5 +1,5 @@
 <template>
-    <form @submit="onSubmit" class="login-form">
+    <form @submit.prevent="onSubmit" class="login-form">
         <label for="username">Username: </label>
         <input placeholder="test" v-model="username" id="username" class="text-input"/>
         <label for="password">Password: </label>
@@ -17,13 +17,25 @@ export default {
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            loading: false
         }
     },
     methods:{
-        onSubmit(e) {
-            e.preventDefault();
-            alert(this.username + ' ' + this.password);
+        onSubmit(submitEvent) {
+            this.loading = true;
+            this.$store.dispatch("auth/register", {
+                username: submitEvent.target.elements.username.value,
+                password: submitEvent.target.elements.password.value
+            }).then(
+                () => {
+                    this.$router.push("/");
+                },
+                (error) => {
+                    this.loading = false;
+                    this.errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                }
+            );
         },
         togglePanel(){
             alert('toggle')

@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <LoginPanel v-show="toggleLoginRegister && !logged"/>
-    <RegisterPanel v-show="!toggleLoginRegister && !logged"/>
-      <div class="container" v-show="logged" >
-        <PageHeader title="F1 Fantasy"/>
-        <router-view/>
-      </div>
+  <div class="container">
+    <!-- <LoginPanel v-show="toggleLoginRegister && !logged"/> -->
+    <!-- <RegisterPanel v-show="!toggleLoginRegister && !logged"/> -->
+      <PageHeader title="F1 Fantasy"/>
+      <router-view/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import RegisterPanel from './components/RegisterPanel.vue';
-import LoginPanel from './components/LoginPanel.vue';
+// import RegisterPanel from './components/RegisterPanel.vue';
+// import LoginPanel from './components/LoginPanel.vue';
 import PageHeader from './components/PageHeader.vue';
 export default {
   components: {
       PageHeader,
-      LoginPanel,
-      RegisterPanel,
+      // LoginPanel,
+      // RegisterPanel,
   },
   data() {
     return {
         logged: true,
-        toggleLoginRegister: false,
+        toggleLoginRegister: true,
     }
   },
   methods: {

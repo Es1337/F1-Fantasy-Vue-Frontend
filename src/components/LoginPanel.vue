@@ -1,9 +1,10 @@
 <template>
-    <form @submit="onSubmit" class="login-form">
+    <form @submit.prevent="onSubmit" class="login-form">
         <label for="username">Username: </label>
         <input placeholder="test" v-model="username" id="username" class="text-input"/>
         <label for="password">Password: </label>
         <input placeholder="test" v-model="password" id="password" class="text-input"/>
+        <span v-show="loading" class="spinner-border spinner-border-sm"></span>
         <input type="submit" class="btn" value="Login">
         <div class="other">
             <a href="#" class="link">Register</a>
@@ -12,18 +13,54 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
     name: "LoginPanel",
     data() {
         return {
             username: '',
-            password: ''
+            password: '',
+            loading: false,
+            access_token: '',
+            refresh_token: '',
+            errorMessage: ''
+        }
+    },
+    computed: {
+        ...mapGetters([
+           'getAccessToken',
+           'getRefreshToken' 
+        ]),
+        loggedIn() {
+            console.log(this.$store.data);
+            return this.$store.state.auth.status.loggedIn;
+        }
+    },
+    created() {
+        if(this.loggedIn) {
+            this.$router.push("/");
         }
     },
     methods:{
-        onSubmit(e) {
-            e.preventDefault();
-            alert(this.username + ' ' + this.password);
+        ...mapMutations([
+            'setAccessToken',
+            'setRefreshToken',
+            'setLoggedStatus'
+        ]),
+        onSubmit(submitEvent) {
+            this.loading = true;
+            this.$store.dispatch("auth/login", {
+                username: submitEvent.target.elements.username.value,
+                password: submitEvent.target.elements.password.value
+            }).then(
+                () => {
+                    this.$router.push("/");
+                },
+                (error) => {
+                    this.loading = false;
+                    this.errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                }
+            );
         }
     }
 }

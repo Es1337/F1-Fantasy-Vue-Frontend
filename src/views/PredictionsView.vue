@@ -1,9 +1,7 @@
 <template>
-<div class="container" v-show="logged" >
-    <PageHeader title="F1 Fantasy"/>
-    <h2>Hello {{user}}</h2>
-  </div>
+<div class="container">
     <h1>Predictions</h1>
+</div>
 </template>
 
 <script>

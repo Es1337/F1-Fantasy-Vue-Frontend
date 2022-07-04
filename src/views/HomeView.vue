@@ -1,24 +1,23 @@
 <template>
-  <div class="container" v-show="this.$store.getters.getLoggedStatus" >
-    <h2>Hello {{user}}</h2>
+  <div class="container" >
+    <h2 v-if="loggedIn">Hello {{user.username}}</h2>
   </div>
 </template>
 
 <script>
   export default {
     name: 'HomeView',
-    components: {
-    },
-    data () {
-      return {
-        user: 'Default'
+    computed: {
+      user() {
+        return this.$store.state.auth.user;
+      },
+      loggedIn() {
+        return this.$store.state.auth.status.loggedIn;
       }
     },
-    methods: {
-    },
     mounted() {
-      if(this.$store.getters.getLoggedStatus) {
-        this.user = this.$store.getters.getUser;
+      if(!this.user) {
+        this.$router.push("/login");
       }
     }
   }

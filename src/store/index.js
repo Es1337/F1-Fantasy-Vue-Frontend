@@ -1,15 +1,23 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import { auth } from "./auth.module";
 
-export default createStore({
+const store = createStore({
+  modules: {
+    auth,
+  },
   state: {
-    logged: true,
+    logged: false,
     user: 'Michał',
-    admin: true
+    admin: false,
+    access_token: '',
+    refresh_token: ''
   },
   getters: {
     getLoggedStatus: state => state.logged,
     getAdminPrivileges: state => state.admin,
     getUser: state => state.user,
+    getAccessToken: state => state.access_token,
+    getRefreshToken: state => state.refresh_token
   },
   mutations: {
     setAdminPrivileges(state, payload) {
@@ -20,10 +28,16 @@ export default createStore({
     },
     setUser(state, payload) {
       state.user = payload;
+    },
+    setAccessToken(state, payload) {
+      state.access_token = payload;
+    },
+    setRefreshToken(state, payload) {
+      state.refresh_token = payload;
     }
   },
   actions: {
   },
-  modules: {
-  }
 })
+
+export default store;
