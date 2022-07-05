@@ -23,8 +23,11 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <button v-if="!add_clicked" style="background: firebrick" class="btn" @click="toggleAdd"> Add </button>
+    </div>
     <div v-if="team_clicked" class="container">
-        <form @submit.prevent="onSubmit" class="add-team-form">
+        <form @submit.prevent="onSubmitUpdate" class="add-team-form">
             <div class="form-field">
                 <label for="name">Name:</label>
                 <input placeholder="Name" v-model="name" type="text" id="name">
@@ -40,6 +43,21 @@
         <div>
             <button style="background: firebrick" class="btn" @click="deleteTeam"> Delete </button>
         </div>
+    </div>
+    <div v-if="add_clicked" class="container">
+        <form @submit.prevent="onSubmitAdd" class="add-team-form">
+            <div class="form-field">
+                <label for="name">Name:</label>
+                <input placeholder="Name" v-model="name" type="text" id="name">
+            </div>
+            <div class="form-field">
+                <label for="points">Points:</label>
+                <input placeholder="0" v-model="points" type="text" id="pointse">
+            </div>
+            <div class="form-field">
+                <input type="submit" class="btn" value="Add">
+            </div>
+        </form>
     </div>
 </template>
 <script>
@@ -57,7 +75,8 @@ export default {
             id: -1,
             name: '',
             points: 0,
-            team_clicked: false
+            team_clicked: false,
+            add_clicked: false
         }
     },
     mounted() {
@@ -67,7 +86,7 @@ export default {
 
                 this.seasons = response.data;
                 this.currentSeasonYear = Math.max(...this.seasons.map(s => s.year));
-                this.seasonId = this.seasons.find(s => s.year == this.currentSeasonYear);
+                this.seasonId = this.seasons.find(s => s.year == this.currentSeasonYear).id;
 
                 this.onSeasonChange();
             },
@@ -77,8 +96,13 @@ export default {
         );
     },
     methods: {
+        toggleAdd() {
+            this.add_clicked = !this.add_clicked;
+            this.team_clicked = false;
+        },
         clickRow(team){
             this.team_clicked = true;
+            this.add_clicked = false;
             this.id = team.id,
             this.name = team.name;
             this.points = team.points;
@@ -88,7 +112,31 @@ export default {
 
             // this.team_clicked = false;
         },
-        onSubmit() {
+        onSubmitAdd() {
+            TeamService.addTeam({
+                    name: this.name,
+                    points: this.points
+                },
+                this.seasonId
+            ).then(
+                (response) => {
+                    var newTeam = {
+                        name: response.data.name,
+                        points: response.data.points
+                    }
+
+                    this.teams.push(newTeam);
+                    // this.teams = response.data;
+                    console.log(response.data);
+
+                    this.add_clicked = !this.add_clicked;
+                },
+                (error) => {
+                    this.content = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                }
+            )
+        },
+        onSubmitUpdate() {
             TeamService.updateTeam({
                     name: this.name,
                     points: this.points
@@ -101,6 +149,8 @@ export default {
                     this.teams[teamObjectIdx].points = this.points;
                     // this.teams = response.data;
                     console.log(response.data);
+
+                    this.team_clicked = !this.team_clicked;
                 },
                 (error) => {
                     this.content = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -119,6 +169,7 @@ export default {
             );
         },
         deleteTeam() {
+            console.log(this.id);
             TeamService.deleteTeam(this.id)
             .then(
                 (response) => {
