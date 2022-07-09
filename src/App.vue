@@ -2,7 +2,7 @@
   <div class="container">
     <!-- <LoginPanel v-show="toggleLoginRegister && !logged"/> -->
     <!-- <RegisterPanel v-show="!toggleLoginRegister && !logged"/> -->
-      <PageHeader title="F1 Fantasy"/>
+      <PageHeader title="F1 Fantasy"  :key="$route.fullPath"/>
       <router-view/>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
   },
   data() {
     return {
+        force_reload: false,
         logged: true,
         toggleLoginRegister: true,
     }
@@ -32,6 +33,7 @@ export default {
   },
   mounted() {
     this.logged = this.$store.getters.getLoggedStatus; 
+    this.force_reload = !this.force_reload;
 }
 }
 </script>

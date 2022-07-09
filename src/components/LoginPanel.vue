@@ -32,7 +32,7 @@ export default {
            'getRefreshToken' 
         ]),
         loggedIn() {
-            console.log(this.$store.data);
+            console.log(this.$store.auth);
             return this.$store.state.auth.status.loggedIn;
         }
     },
