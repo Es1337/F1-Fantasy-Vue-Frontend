@@ -6,7 +6,7 @@
         <input placeholder="test" v-model="password" id="password" class="text-input" type="password"/>
         <input type="submit" class="btn" value="Register">
         <div class="other">
-            <a  class="link" @click="togglePanel">Login</a>
+            <a class="link" @click="togglePanel">Login</a>
         </div>
     </form>
 </template>
@@ -38,7 +38,7 @@ export default {
             );
         },
         togglePanel(){
-            alert('toggle')
+           this.$router.push("/login");
         }
     }
 }

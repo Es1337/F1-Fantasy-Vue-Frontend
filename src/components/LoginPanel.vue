@@ -7,7 +7,7 @@
         <span v-show="loading" class="spinner-border spinner-border-sm"></span>
         <input type="submit" class="btn" value="Login">
         <div class="other">
-            <a href="#" class="link">Register</a>
+            <a class="link" @click="togglePanel">Register</a>
         </div>
     </form>
 </template>
@@ -61,6 +61,9 @@ export default {
                     this.errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 }
             );
+        },
+        togglePanel(){
+           this.$router.push("/register");
         }
     }
 }
