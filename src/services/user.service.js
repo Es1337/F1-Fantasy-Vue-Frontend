@@ -20,7 +20,6 @@ class UserService {
     getUserByEmail(email) {
         return axios.get(
             API_USER + `/email`,
-            null,
             { 
                 headers: authHeader(),
                 params: {

@@ -4,6 +4,7 @@
         <NavButton v-if="isLogged" value="Results" color="firebrick" url="/results"/>
         <NavButton v-if="isLogged" value="Schedule" color="firebrick" url="/schedule"/>
         <NavButton v-if="isLogged" value="Predictions" color="firebrick" url="/predictions"/>
+        <NavButton v-if="isLogged" value="Ranking" color="firebrick" url="/ranking"/>
         <NavButton v-if="isAdmin" value="Admin" color="firebrick" url="/admin"/>
         <NavButton v-if="!isLogged" value="Log In" color="firebrick" url="/login"/>
         <NavButton v-if="!isLogged" value="Register" color="firebrick" url="/register"/>

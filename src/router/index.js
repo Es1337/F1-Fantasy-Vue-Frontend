@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import ResultsView from '../views/ResultsView.vue'
 import ScheduleView from '../views/ScheduleView.vue'
 import PredictionsView from '../views/PredictionsView.vue'
+import RankingView from '../views/RankingView.vue'
 import AdminView from '../views/AdminView.vue'
 
 import LoginPanel from '../components/LoginPanel.vue'
@@ -14,11 +15,16 @@ import ModifyDriverPanel from '../components/admin-panel/ModifyDriverPanel.vue'
 import ModifyRacePanel from '../components/admin-panel/ModifyRacePanel.vue'
 import ModifyTeamPanel from '../components/admin-panel/ModifyTeamPanel.vue'
 import ManageUsersPanel from '../components/admin-panel/ManageUsersPanel.vue'
+import ManageAvPredictionsPanel from '../components/admin-panel/ManageAvPredictions.vue'
+import ResolvePredictionsPanel from '../components/admin-panel/ResolvePredictions.vue'
 
 import Season from '../components/admin-panel/AddSeasonPages/ASP_Season.vue'
 import Races from '../components/admin-panel/AddSeasonPages/ASP_Races.vue'
 import Teams from '../components/admin-panel/AddSeasonPages/ASP_Teams.vue'
 import Drivers from '../components/admin-panel/AddSeasonPages/ASP_Drivers.vue'
+
+import ViewPredictions from '../components/predictions-panel/ViewPredictions.vue'
+import AddPrediction from '../components/predictions-panel/AddPrediction.vue'
 
 const routes = [
   {
@@ -49,7 +55,24 @@ const routes = [
   {
     path: '/predictions',
     name: 'predicitons',
-    component: PredictionsView
+    component: PredictionsView,
+    children: [
+      {
+        path: '',
+        name: 'view-predictions',
+        component: ViewPredictions
+      },
+      {
+        path: 'add',
+        name: 'add-prediction',
+        component: AddPrediction
+      }
+    ]
+  },
+  {
+    path: '/ranking',
+    name: 'ranking',
+    component: RankingView
   },
   {
     path: '/admin',
@@ -88,6 +111,14 @@ const routes = [
       {
         path: 'manage-users',
         component: ManageUsersPanel
+      },
+      {
+        path: 'manage-av-preds',
+        component: ManageAvPredictionsPanel
+      },
+      {
+        path: 'resolve-preds',
+        component: ResolvePredictionsPanel
       },
       {
         path: 'modify-team',
