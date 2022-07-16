@@ -75,6 +75,7 @@ import RaceService from "@/services/race.service"
       onSeasonChange(){
         RaceService.getRacesFromSeason(this.seasonId).then(
           (response) => {
+            this.races = [];
             var data = response.data;
             console.log(data);
             response.data.forEach(race => {
