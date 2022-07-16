@@ -3,7 +3,7 @@
         <label for="username">Username: </label>
         <input placeholder="test" v-model="username" id="username" class="text-input"/>
         <label for="password">Password: </label>
-        <input placeholder="test" v-model="password" id="password" class="text-input"/>
+        <input placeholder="test" v-model="password" id="password" class="text-input" type="password"/>
         <span v-show="loading" class="spinner-border spinner-border-sm"></span>
         <input type="submit" class="btn" value="Login">
         <div class="other">
