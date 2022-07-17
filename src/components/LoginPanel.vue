@@ -154,4 +154,9 @@ a:hover::before {
         transform-origin: left;
         transform: scaleX(1);
     }
+
+    .link {
+    cursor: pointer;
+    }
+
 </style>
